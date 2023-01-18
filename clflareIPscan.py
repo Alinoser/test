@@ -1,7 +1,6 @@
-import ipcalc
-import socket,random,re
-import threading,configparser
-import requests,sys,time,os
+import socket
+import ipcalc,re
+import threading
 bg=''
 
 G = bg+'\033[32m'
@@ -30,7 +29,7 @@ def save(x):
 		
 def scanner(host):
 	sock=socket.socket()
-	sock.settimeout(2)
+	sock.settimeout(5)
 	try:
 		sock.connect((str(host),80))
 		payload='GET / HTTP/1.1\r\nHost: {}\r\n\r\n'.format(host)
@@ -42,7 +41,7 @@ def scanner(host):
 				print('response status : {}{}{}'.format(O,data[0],GR))
 			if data[0]=='Server':
 				try:
-					if data[1] ==' cloudflare':
+					if data[1] ==' CloudFront':
 						print('{}server : {}\nFound working {}..'.format(G,host,GR))
 						save(f'{host} === opened')
 						payloadsnd(host)
